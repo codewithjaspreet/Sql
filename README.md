@@ -109,11 +109,11 @@ Created Database with three tables :
 ---
 Questions
 
-                       Q-1. Write an SQL query to fetch “FIRST_NAME” from Worker table using the alias name as <WORKER_NAME>.
-                       select first_name AS WORKER_NAME from worker;
+                    Q-1. Write an SQL query to fetch “FIRST_NAME” from Worker table using the alias name as <WORKER_NAME>.
+                    select first_name AS WORKER_NAME from worker;
                        
-                       -- solution 1 : 
-                       select FIRST_NAME from Worker;
+                    -- solution 1 : 
+                    select FIRST_NAME from Worker;
 
 
 
