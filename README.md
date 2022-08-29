@@ -1,18 +1,19 @@
 
-![Logo](data:image/png;base64,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)
+
 
 
 # Complete Sql 2022
 
 
-## Documentation
+![sql](https://user-images.githubusercontent.com/85099922/187137617-bf95cb75-57d7-43cf-b253-a67bba04cde1.png)
+
 
 [Official Website](https://www.mysql.com/)
 
 
-## Installation
+# Installation
 
-Get Started
+## Get Started
 
 ```bash
   https://dev.mysql.com/downloads/installer/
@@ -29,11 +30,90 @@ Checkout the important topics below for SQl related to placements
 
 #### Definition
 
-```http
+```
   SQL: Structured Query Language, used to access and manipulate data
   SQL used CRUD operations to communicate with DB.
 ```
+---
 
+
+Created Database with three tables :
+---
+
+        create database ORG;
+        show databases;
+        use ORG;
+
+        create table worker(
+        WORKER_ID INT NOT NULL PRIMARY KEY auto_increment,
+        FIRST_NAME CHAR(25),
+        LAST_NAME CHAR(25),
+        SALARY INT (15),
+        JOINING_DATE datetime,
+        DEPARTMENT CHAR(25)
+        );
+        INSERT INTO Worker 
+          (WORKER_ID, FIRST_NAME, LAST_NAME, SALARY, JOINING_DATE, DEPARTMENT) VALUES
+            (001, 'Monika', 'Arora', 100000, '14-02-20 09.00.00', 'HR'),
+            (002, 'Niharika', 'Verma', 80000, '14-06-11 09.00.00', 'Admin'),
+            (003, 'Vishal', 'Singhal', 300000, '14-02-20 09.00.00', 'HR'),
+            (004, 'Amitabh', 'Singh', 500000, '14-02-20 09.00.00', 'Admin'),
+            (005, 'Vivek', 'Bhati', 500000, '14-06-11 09.00.00', 'Admin'),
+            (006, 'Vipul', 'Diwan', 200000, '14-06-11 09.00.00', 'Account'),
+            (007, 'Satish', 'Kumar', 75000, '14-01-20 09.00.00', 'Account'),
+            (008, 'Geetika', 'Chauhan', 90000, '14-04-11 09.00.00', 'Admin');
+
+                Select * from Worker;
+
+        CREATE TABLE Bonus(
+
+        WORKER_REF_ID INT,
+        BONUS_AMOUNT INT(10),
+        BONUS_DATE DATETIME,
+        foreign key(WORKER_REF_ID)
+           references Worker(WORKER_ID)
+           ON delete cascade
+        );
+
+        INSERT INTO Bonus 
+          (WORKER_REF_ID, BONUS_AMOUNT, BONUS_DATE) VALUES
+            (001, 5000, '16-02-20'),
+            (002, 3000, '16-06-11'),
+            (003, 4000, '16-02-20'),
+            (001, 4500, '16-02-20'),
+            (002, 3500, '16-06-11');
+
+        create table Title(
+
+        WORKER_REF_ID int,
+        WORKER_TITLE char(25),
+        AFFECTED_FROM datetime,
+        foreign key (WORKER_REF_ID)
+        references Worker(WORKER_ID)
+        on delete cascade
+        );
+
+
+        INSERT INTO Title 
+          (WORKER_REF_ID, WORKER_TITLE, AFFECTED_FROM) VALUES
+         (001, 'Manager', '2016-02-20 00:00:00'),
+         (002, 'Executive', '2016-06-11 00:00:00'),
+         (008, 'Executive', '2016-06-11 00:00:00'),
+         (005, 'Manager', '2016-06-11 00:00:00'),
+         (004, 'Asst. Manager', '2016-06-11 00:00:00'),
+         (007, 'Executive', '2016-06-11 00:00:00'),
+         (006, 'Lead', '2016-06-11 00:00:00'),
+         (003, 'Lead', '2016-06-11 00:00:00');
+
+         select * from Title
+---
+Questions
+
+                       Q-1. Write an SQL query to fetch “FIRST_NAME” from Worker table using the alias name as <WORKER_NAME>.
+                       select first_name AS WORKER_NAME from worker;
+                       
+                       -- solution 1 : 
+                       select FIRST_NAME from Worker;
 
 
 
