@@ -12,9 +12,12 @@ Let's embark on this SQL journey together! :rocket:
 
 
 # WINDOW FUNCTIONS ~
+ 
+  # row_number()  :star:
+
+
 
 ```sql
--- Journey into Row Number Magic :star:
 
 -- Ever wondered how to conjure the first two employees from each department who embarked on the company adventure? Behold the `ROW_NUMBER()` spell:
 
@@ -30,8 +33,10 @@ WHERE x.rn < 3;
 
 -------
 
+  # Rank()  :star:
+
+
 ```sql
--- Ascend the Rank Tower :trophy:
 
 -- Ascend to greatness by summoning the top 3 earners in each department through the `RANK()` enchantment:
 
@@ -47,8 +52,10 @@ WHERE x.rnk < 4;
 
 -------
 
+  # Lead() & Lag()  :star:
+
+
 ```sql
--- Unveiling the Secrets of Lead and Lag :crystal_ball:
 
 -- Peer into the past and future with the mystic `LEAD()` and `LAG()` incantations, unlocking the wisdom of adjacent records:
 
