@@ -67,4 +67,52 @@ FROM employees e;
 ```
 
 
+  # Common Table Expressions ~ (With Clause or SubQuery Factoring)
+
+
+```sql
+
+-- select * from products;
+
+-- Find the stores whose sales are greater than the average sales across all stores
+
+-- METHOD 1 - SUB - QUERIES
+
+-- 1.) Find the total sales per store
+
+
+SELECT store_id, SUM(cost_in_cents) AS total_sales_per_store
+FROM products
+GROUP BY store_id;
+
+-- 2.) Find the average sales across all stores
+
+
+SELECT AVG(total_sales_per_store) AS avg_sales_for_all_stores
+FROM (
+    SELECT store_id, SUM(cost_in_cents) AS total_sales_per_store
+    FROM products
+    GROUP BY store_id
+) AS x;
+
+-- 3.) Find the stores where total sales > average sales of all stores
+
+
+SELECT total_sales.store_id, total_sales.total_sales_per_store
+FROM (
+    SELECT store_id, SUM(cost_in_cents) AS total_sales_per_store
+    FROM products
+    GROUP BY store_id
+) AS total_sales
+JOIN (
+    SELECT AVG(total_sales_per_store) AS avg_sales_for_all_stores
+    FROM (
+        SELECT store_id, SUM(cost_in_cents) AS total_sales_per_store
+        FROM products
+        GROUP BY store_id
+    ) AS x
+) AS avg_sales
+ON total_sales.total_sales_per_store > avg_sales.avg_sales_for_all_stores;
+
+```
 
