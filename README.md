@@ -116,3 +116,21 @@ ON total_sales.total_sales_per_store > avg_sales.avg_sales_for_all_stores;
 
 ```
 
+```sql
+
+
+-- METHOD 2 : Using the WITH Clause
+
+with Total_Sales(store_id ,total_sales_per_store) as 
+       
+       (select s.store_id , sum(cost_in_cents) as total_sales_per_store from products s group by store_id) ,
+       
+       Avg_Sales(avg_sales_for_all_stores) as 
+       
+       (select avg(total_sales_per_store) as avg_sales_for_all_stores from Total_Sales)
+       
+select * from Total_Sales t1 
+join Avg_Sales  t2
+on t1.total_sales_per_store > t2.avg_sales_for_all_stores;
+
+```
