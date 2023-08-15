@@ -79,3 +79,68 @@
     FROM Customers c LEFT JOIN Orders o 
     ON c.id=o.customerId 
     WHERE o.customerId IS NULL;
+
+
+    
+## 184. Department Highest Salary
+
+
+    SELECT 
+    Department.name AS Department ,
+    Employee.name AS Employee, 
+    Employee.salary
+    
+    FROM Department  
+    
+    Inner JOIN Employee  ON Employee.departmentId=Department.id 
+    
+    WHERE(departmentId, salary) IN
+    (SELECT departmentId,MAX(salary) FROM Employee GROUP BY departmentId) ;
+
+
+
+## 185. Department Top Three Salaries
+
+
+    
+    SELECT Department, employee, salary FROM (
+        SELECT d.name AS Department
+            , e.name AS employee
+            , e.salary
+            , DENSE_RANK() OVER (PARTITION BY d.name ORDER BY e.salary DESC) AS drk
+        FROM Employee e JOIN Department d ON e.DepartmentId= d.Id
+    ) t WHERE t.drk <= 3
+
+-- 196. Delete Duplicate Emails
+
+    DELETE p1 from person p1 , person p2 where p1.email = p2.email and p1.id > p2.id
+
+
+
+
+
+
+## 584. Find Customer Referee
+
+
+    Select name from Customer where referee_id != 2 or referee_id is null;
+
+## 595. Big Countries
+
+
+    Select name, population ,area from World where area >= 3000000 or population >= 25000000;
+
+
+## 586. Customer Placing the Largest no. of Orders
+
+    select customer_number  from orders 
+    
+    group by customer_number order by Count(customer_number) desc limit 1;
+
+
+
+## 596. Classes More Than 5 Students
+
+    select class from courses 
+    group by class 
+    having count(class) >=5
