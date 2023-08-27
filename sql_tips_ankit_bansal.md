@@ -33,14 +33,36 @@
 
 ```
 
-## Where clause use to filter the data row by row - which means the keyword iteratively check for each row according to the filter condition
-
-## ex - 
+* Where clause use to filter the data row by row - which means the keyword iteratively check for each row according to the filter condition.
 
 ```sql
   
-
 select * from employee 
 where salary > 60000 ;
 
 ```
+---
+
+* Having clause is used on aggregated values
+
+```sql
+
+
+select department_id, avg(salary) from employee
+group by department_id having avg(salary) > 30000;
+
+```
+
+---
+
+* while using both keep in mind where should be used first then do having !
+
+```sql
+
+
+select department_id ,avg(salary) from employee
+where salary > 60000 group by department_id having avg(salary)>30000;
+
+```
+  
+
