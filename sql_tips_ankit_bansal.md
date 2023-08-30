@@ -453,3 +453,106 @@ case when row_number() over (order by t.order_id) %3=0 then 'L' else 'XL'end siz
 ,t.amount from transactions t;
 
 ```
+
+---
+---
+
+# 7 - Most Asked SQL JOIN based Interview Question | # of Records after 4 types of JOINs
+
+## interview question: no of records with diffrent kinds of joins when there are duplicate key values
+
+```sql
+
+create table t1 ( a  INT  ) ;
+create table t2 ( b  INT  ) ;
+
+Insert into t1 values(1);
+Insert into t1 values(1);
+
+Insert into t2 values(1);
+Insert into t2 values(1);
+Insert into t2 values(1);
+
+select  * from t1;
+select * from t2;
+
+```
+
+* Inner join
+
+```sql
+
+select * from t1 inner join t2 on t1.a = t2.b;
+
+```
+* Left Join
+
+```sql
+
+select * from t1 left join t2 on t1.a = t2.b;
+
+```
+* Right Join
+  
+```sql
+
+select * from t1 right join t2 on t1.a = t2.b;
+
+```
+* Full Outer Join
+
+```sql
+ 
+select * from t1 full outer join t2 on t1.a = t2.b;
+
+```
+
+* point to be noted null != null , we can't join on this condition
+
+---
+---
+
+# 8 - How to Calculate Mode in SQL | How to Find Most Frequent Value in a Column
+
+```sql
+
+create table modes ( temp INT);
+insert into modes values(1);
+insert into modes values(2);
+insert into modes values(2);
+insert into modes values(2);
+insert into modes values(3);
+insert into modes values(4);
+insert into modes values(5);
+insert into modes values(5);
+insert into modes values(7);
+insert into modes values(7);
+insert into modes values(8);
+
+select * from modes;
+
+```
+
+# Query to find mode - 
+
+* Method 1 - Using CTE -
+
+```sql
+
+with freq_cte as (
+select temp , count(*) as freq from modes group by temp) 
+select * from freq_cte where freq = (select max(freq) from freq_cte);
+
+```
+
+* Method 2 - Using Rank Function -
+
+```sql
+
+select temp , row_number() over(partition by temp order by temp desc) from modes; 
+
+with freq_cte as ( select temp , count(*) as freq from modes group by temp) ,
+rnk_cte as (select * , rank() over(order by freq desc) as rn from freq_cte)
+select * from rnk_cte where rn= 1;
+
+```
