@@ -331,3 +331,125 @@ END;
 select * from orders;
 
 ```
+
+---
+---
+
+# 4 -  SQL Self Join Concept | Most Asked Interview Question | Employee Salary More than Manager's Salary
+
+
+```sql
+
+  select * from sampletable;
+  
+  select t1.emp_name , t1.salary from sampletable t1 JOIN
+  sampletable t2 on t1.manager_id = t2.emp_id where t1.salary > t2.salary;
+
+```
+
+# 5 - How to Practice SQLs Without Creating Tables In Your Database
+
+
+```sql
+
+
+with emp1 as
+(
+select 1 as emp_id, 1000 as emp_salary, 1 as dep_id
+union all select 2 as emp_id, 2000 as emp_salary, 2 as dep_id
+union all select 3 as emp_id ,3000 as emp_salary, 3 as dep_id
+union all select 4 as emp_id ,4000 as emp_salary, 4 as dep_id
+),
+dep as
+(
+select 1 as dep_id ,'d1' as dep_name
+union all select 2 as dep_id, 'd1' as dep_name
+union all select 3 as dep_id, 'd2' as dep_name
+union all select 4 as dep_id, 'd3' as dep_name
+)
+select* from emp;
+
+```
+---
+---
+
+# 6 - SQL Cross Join | Use Cases | Master Data | Performance Data
+
+
+## Create Required Tables used in the video - 
+
+```sql
+
+create table products (
+id int,
+name varchar(10)
+);
+insert into products VALUES 
+(1, 'A'),
+(2, 'B'),
+(3, 'C'),
+(4, 'D'),
+(5, 'E');
+
+
+create table colors (
+color_id int,
+color varchar(50)
+);
+insert into colors values (1,'Blue'),(2,'Green'),(3,'Orange');
+
+
+create table sizes
+(
+size_id int,
+size varchar(10)
+);
+
+insert into sizes values (1,'M'),(2,'L'),(3,'XL');
+
+
+create table transactions
+(
+order_id int,
+product_name varchar(20),
+color varchar(10),
+size varchar(10),
+amount int
+);
+insert into transactions values (1,'A','Blue','L',300),(2,'B','Blue','XL',150),(3,'B','Green','L',250),(4,'C','Blue','L',250),
+(5,'E','Green','L',270),(6,'D','Orange','L',200),(7,'D','Green','M',250);
+
+```
+
+* First use case is to produce master data for a fact table 
+
+```sql
+
+
+select * from transactions;
+
+select product_name, color, size, sum(amount) as totalamount
+from transactions
+group by product_name, color, size;
+
+with master_data as (select p.name as product_name ,  c.color , s.size from products p , colors c , sizes s)
+, sales as (select product_name, color, size , sum(amount) as totalamount
+from transactions
+group by product_name, color, size)
+select md.product_name, md.color, md.size  , ifnull(s.totalamount,0) as totalamount from master_data md
+LEFT join sales  s on md.product_name=s.product_name and md.color=s.color and md.size = s.size order by totalamount;
+
+```
+
+* Second use case is when you want to generate large no of records for performance testing.
+* Code shown below is just a example like how we can join table with large records to make a large dataset and manipulate calculations
+
+
+```sql
+
+
+select row_number() over (order by t.order_id) as order_id, t.product_name, t. color,
+case when row_number() over (order by t.order_id) %3=0 then 'L' else 'XL'end size
+,t.amount from transactions t;
+
+```
