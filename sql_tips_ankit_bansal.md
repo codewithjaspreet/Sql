@@ -556,3 +556,111 @@ rnk_cte as (select * , rank() over(order by freq desc) as rn from freq_cte)
 select * from rnk_cte where rn= 1;
 
 ```
+
+
+---
+---
+
+# 9 -  SQL Interview Question Based on Full Outer Join | Asked in Deloitte
+
+
+# Create required tables 
+
+```sql
+
+create table emp_2020
+(
+emp_id int,
+designation varchar(20)
+);
+
+create table emp_2021
+(
+emp_id int,
+designation varchar(20)
+);
+
+insert into emp_2020 values (1,'Trainee'), (2,'Developer'),(3,'Senior Developer'),(4,'Manager');
+insert into emp_2021 values (1,'Developer'), (2,'Developer'),(3,'Manager'),(5,'Trainee');
+
+select * from emp_2020 ;
+select * from emp_2021;
+
+```
+
+* Full outer join dosen't work in mysql so make a union between left and right join
+
+```sql
+
+select e20.* , e21.*  from emp_2020 e20  
+left  join emp_2021 e21  on e20.emp_id = e21.emp_id
+
+union
+
+select e20.* , e21.*  from emp_2020 e20  
+right  join emp_2021 e21  on e20.emp_id = e21.emp_id;
+
+```
+
+* Query - ( Used combination of joins as full outer join not works in Mysql)
+
+``` sql
+
+select ifnull(e20.emp_id , e21.emp_id) as emp_id , case 
+when e21.designation != e20.designation then 'Promoted'
+when e21.designation is null then 'Resigned'
+else 'New' end 
+as comment
+
+from emp_2020 e20  
+
+left join emp_2021 e21 on e20.emp_id = e21.emp_id where ifnull(e20.designation, 'xxx') != ifnull(e21.designation, 'yyy')
+
+union
+
+select ifnull(e20.emp_id , e21.emp_id) as emp_id , case 
+when e21.designation != e20.designation then 'Promoted'
+when e21.designation is null then 'Resigned'
+else 'New' end 
+as comment
+
+from emp_2020 e20  
+
+right join emp_2021 e21 on e20.emp_id = e21.emp_id where ifnull(e20.designation, 'xxx') != ifnull(e21.designation, 'yyy');
+
+```
+
+---
+---
+
+
+# 10 - A Simple and Tricky SQL Question | Rank Only Duplicates | SQL Interview Questions
+
+``` sql
+
+create table list (id varchar(5));
+insert into list values ('a');
+insert into list values ('a');
+insert into list values ('b');
+insert into list values ('c');
+insert into list values ('c');
+insert into list values ('c');
+insert into list values ('d');
+insert into list values ('d');
+insert into list values ('e');
+
+select * from list;
+
+```
+
+``` sql
+with cte_duplicates as (
+select * from list group by id having count(1)>1 ),
+cte_rank as (
+select id,rank() over(order by id) as rnk from cte_duplicates )
+select l.id, cr.rnk  from list l left join cte_rank cr on l.id = cr.id
+
+```
+
+---
+---
