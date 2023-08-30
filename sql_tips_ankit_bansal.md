@@ -1,9 +1,9 @@
 # SQL TIPS & TRICKS BY ANKIT BANSAL
 
 
-## 1 -  Where Clause vs Having Clause
+# 1 -  Where Clause vs Having Clause
 
-# Let's first Create an Employee Table 
+## Let's first Create an Employee Table 
 
 ```sql
 
@@ -65,8 +65,10 @@ where salary > 60000 group by department_id having avg(salary)>30000;
 
 ```
   
+---
+---
 
-## 2 - SQL Convert Rows to Columns and Columns to Rows without using Pivot Functions
+# 2 - SQL Convert Rows to Columns and Columns to Rows without using Pivot Functions
 
 ## Create Table ~
 
@@ -126,7 +128,9 @@ select emp_id, 'bonus' as salary_component_type, bonus as val from emp_compensat
 
 ```
 
--- 3 - Top 10 SQL interview Questions and Answers | Frequently asked SQL interview questions.
+---
+---
+# 3 - Top 10 SQL interview Questions and Answers | Frequently asked SQL interview questions.
 
 ## Create the 'emp' table
 
@@ -253,10 +257,77 @@ VALUES
 
 ```
 
+
 ## Q7. Find all transaction done by shilpa
+
+
+```sql
+
+ create orders table - 
+ CREATE TABLE orders (
+    order_id INT AUTO_INCREMENT PRIMARY KEY,
+    customer_name VARCHAR(255),
+    order_date DATE,
+    order_amount DECIMAL(10, 2),
+    customer_gender ENUM('Male', 'Female', 'Other')
+);
+
+```
+
+```sql
+
+INSERT INTO orders (customer_name, order_date, order_amount, customer_gender)
+VALUES
+    ('Shilpa', '2020-01-01', 10000, 'Male'),
+    ('Rahul', '2020-01-02', 12000, 'Female'),
+    ('SHILPA', '2020-01-02', 12000, 'Male'),
+    ('Rohit', '2020-01-03', 15000, 'Female'),
+    ('shilpa', '2020-01-03', 14000, 'Male');
+
+```
+
+```sql
+
+
+select * from orders where UPPER(customer_name) = 'SHILPA';
+
+
+```
 
 ## Q8. self join , manager salary > emp salary
 
+```sql
+
+
+  select * from sampletable;
+  
+  select t1.emp_name , t1.salary from sampletable t1 JOIN
+  sampletable t2 on t1.manager_id = t2.emp_id where t1.salary > t2.salary;
+
+
+```
+
 ## Q9. Joins left Join/ Inner Join
 
+* Inner Join: Combines matching rows from both tables based on a condition, excluding non-matching rows.
+* Left Join: Combines all rows from the left table with matching rows from the right table; non-matching rows from the left table have null values.
+* Right Join: Combines all rows from the right table with matching rows from the left table; non-matching rows from the right table have null values.
+
+
 ## Q10. Update query to swap gender
+
+
+```sql
+
+SET SQL_SAFE_UPDATES = 0;
+
+UPDATE orders
+SET customer_gender = CASE
+    WHEN customer_gender = 'Male' THEN 'Female'
+    WHEN customer_gender = 'Female' THEN 'Male'
+    ELSE customer_gender  -- Include this line if you want to keep other values as they are
+END;
+
+select * from orders;
+
+```
