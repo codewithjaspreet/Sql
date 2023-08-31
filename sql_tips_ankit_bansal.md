@@ -664,3 +664,162 @@ select l.id, cr.rnk  from list l left join cte_rank cr on l.id = cr.id
 
 ---
 ---
+
+
+# 11 - Master SQL UPDATE Statement | SQL UPDATE A-Z Tutorial | SQL Update with JOIN
+
+
+```sql 
+create database ankit_sql;
+
+CREATE TABLE EmployeeData (
+    emp_id INT PRIMARY KEY,
+    emp_name VARCHAR(255),
+    salary DECIMAL(10, 2),
+    manager_id INT,
+    emp_age INT,
+    dept_id INT
+);
+
+INSERT INTO EmployeeData (emp_id, emp_name, salary, manager_id, emp_age, dept_id)
+VALUES
+    (1, 'John Doe', 60000.00, NULL, 30, 101),
+    (2, 'Jane Smith', 55000.00, 1, 28, 101),
+    (3, 'Michael Johnson', 70000.00, 1, 32, 102),
+    (4, 'Emily Davis', 62000.00, 1, 29, 102),
+    (5, 'William Brown', 58000.00, 3, 31, 103),
+    (6, 'Olivia Wilson', 56000.00, 3, 27, 103),
+    (7, 'James Taylor', 75000.00, 1, 35, 104),
+    (8, 'Sophia Martinez', 63000.00, 7, 30, 104),
+    (9, 'Alexander Anderson', 60000.00, 7, 29, 105),
+    (10, 'Ava Rodriguez', 57000.00, 7, 28, 105);
+    
+    
+CREATE TABLE DepartmentData (
+    dept_id INT PRIMARY KEY,
+    dept_name VARCHAR(255)
+);
+
+INSERT INTO DepartmentData (dept_id, dept_name)
+VALUES
+    (101, 'Human Resources'),
+    (102, 'Marketing'),
+    (103, 'Engineering'),
+    (104, 'Finance'),
+    (105, 'Sales');
+
+
+select * from EmployeeData;
+select * from DepartmentData;
+
+```
+
+
+
+# Update syntax for single value update
+
+
+```sql
+
+SET SQL_SAFE_UPDATES = 0;
+
+update EmployeeData set salary = 10000 ;
+
+```
+
+
+# Update syntax with where clause
+
+
+```sql
+
+
+update EmployeeData set salary = 12000 where emp_age> 30  ;
+
+
+```
+
+# Update multiple values
+
+```sql
+
+update  EmployeeData set salary = 12000 , dept_id = 104 where emp_id =  32 ;
+
+
+```
+
+# Update col with constant values or derived calculations - ( aggregations / case when statement )
+
+```sql
+
+
+update EmployeeData set salary = case when dept_id = 101 then salary*1.1  when dept_id = 104  then salary*1.2 else salary end;
+
+
+
+```
+
+
+# Update statement using join - here we will see how to join dept name from DepartmentData table to EmployeeData ( Workbench - MySql)
+
+
+* Adding a new column dept_name in employee table - initially all values will be null
+
+```sql
+
+alter table EmployeeData add dept_name varchar(20);
+
+```
+
+# Update using join 
+
+```sql
+
+update EmployeeData e
+inner join DepartmentData d on e.dept_id=d.dept_id set e.dept_name=d.dept_name;
+
+
+```
+
+# Interview question on swapping the genders - 
+
+* let's first add a gender column in EmployeeData Table
+
+```sql
+
+alter table EmployeeData add gender varchar(15);
+
+```
+
+```sql
+
+update employeedata set gender = case when dept_id = 101 then 'Male' when dept_id = 103 then 'Female' else 'Male' end;
+select * from employeedata;
+
+```
+
+
+# Swap gender ~
+
+```sql
+
+
+update employeedata set gender = case when gender = 'Male' then 'Female' when gender = 'Female' then 'Male' end;
+
+
+```
+
+* note - here above we can't use two update statements as - neccessity is to use  - case when for desired output
+
+
+
+# Steps to check before making updating the database - convert it into select statement to get a run time overview  -
+
+```sql
+
+select * , case when gender = 'Male' then 'Female' when gender = 'Female' then 'Male' end  as updated_gender from employeedata;
+
+```
+
+---
+---
