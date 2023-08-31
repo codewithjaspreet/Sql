@@ -1879,7 +1879,7 @@ select * from table_name;
 
 ```
 
-# Custom sort trick - display India above  along with neighbouring countries may be for a sake of comparision with other country
+# 13 - Custom sort trick - display India above  along with neighbouring countries may be for a sake of comparision with other country
 
 ```sql
 
@@ -1912,5 +1912,52 @@ order by CASE
                WHEN country = 'Sri Lanka' THEN 3
                ELSE 0
            END   desc , Happiness_2020 desc;
+
+```
+
+
+# 14 -   Problem with Running SUM in SQL | Watch it to Avoid The Mistake
+
+
+```sql 
+create table products (product_id Varchar(2) , cost INT);
+
+insert into products values('P1' , 200);
+insert into products values('P2' , 300);
+insert into products values('P3' , 300);
+insert into products values('P4' , 500);
+insert into products values('P5' , 600);
+
+select * from products;
+
+```
+
+
+```sql
+
+
+select *, sum(cost) over(order by cost) as running_sum from products;
+
+```
+
+
+* output of this give running sum as same for value 300 - as it is duplicate
+
+* to avoid this and get correct result there are two methods below -- 
+
+* 1- First could be specifying any other column in the order by too in order to get unique result such that product_id in this case
+
+```sql
+
+ select *, sum(cost) over(order by cost, product_id) as running_sum from products;
+
+```
+
+* 2 - or using. - rows between unbounded preceding and current row - clause
+
+```sql
+
+ select *, sum(cost) over(order by cost asc rows between unbounded preceding and current row) as running_sum from products;
+
 
 ```
