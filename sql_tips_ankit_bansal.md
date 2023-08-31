@@ -1961,3 +1961,15 @@ select *, sum(cost) over(order by cost) as running_sum from products;
 
 
 ```
+
+# 15 - Difference Between count(*) ,count(0),count(-1),count(col),count('youtube') | SQL Interview question
+
+* count(*) - give count of total no. of rows in the table
+* count(0) , count(-1) , count("jaspreet") ... anything like this means count this constant value count(*) no. of times which is same 
+  as count(*)
+
+* count(dept_name) .. means count over a column name .. give count of row expect null ones
+
+---
+---
+
