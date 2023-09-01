@@ -66,4 +66,59 @@ where GOLD NOT IN (select distinct SILVER from events union all select distinct 
 ---
 ---
 
+## 2 - Solving a REAL Business Use Case Using SQL | Business Days Excluding Weekends and Public Holidays  - MYSQL
+
+* Create Required Tables -
+
+ ```sql
+create table tickets
+(
+ticket_id varchar(10),
+create_date date,
+resolved_date date
+);
+insert into tickets values
+(1,'2022-08-01','2022-08-03')
+,(2,'2022-08-01','2022-08-12')
+,(3,'2022-08-01','2022-08-16');
+create table holidays
+(
+holiday_date date
+,reason varchar(100)
+);
+insert into holidays values
+('2022-08-11','Rakhi'),('2022-08-15','Independence day');
+
+
+select * from tickets;
+select * from holidays;
+
+```
+
+* Query to Calculate no of days between two days and then difference of weeks between two days ---
+
+ ```sql
+
+ select * , datediff(resolved_date ,create_date) as no_of_days  , 
+ week(create_date) as start_week , week(resolved_date) as end_date ,  FLOOR( datediff(resolved_date ,create_date) / 7) AS  
+ weeks_difference
+ from tickets ;
+ 
+ ```
+
+
+* Query gives no of business days excluding weekend between two dates and the public holidays 
+
+
+```sql
+
+select *  ,  DATEDIFF(resolved_date , create_date) as actual_days,DATEDIFF(resolved_date, create_date) - 2 * FLOOR(DATEDIFF(resolved_date, create_date) / 7) as actual_after_weekend_excluson ,
+ DATEDIFF(resolved_date, create_date) - 2 * FLOOR(DATEDIFF(resolved_date, create_date) / 7) - no_of_public_holidays AS actual_after_weekend_and_public_holiday_exclusin
+ from (
+SELECT ticket_id , create_date , resolved_date , count(holiday_date) as no_of_public_holidays
+FROM 
+    tickets left join holidays on holiday_date between create_date and resolved_date group by ticket_id , create_date , resolved_date
+) as a;
+
+```
 
