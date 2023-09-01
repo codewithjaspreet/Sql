@@ -233,7 +233,65 @@ select emp_id ,max( case when action = 'in' then time  end ) as intime , max(cas
 ---
 ---
  
+## 4 - Airbnb SQL Interview Question | Convert Comma Separated Values into Rows | Data Analytics
+
+* Create Required Tables -
+
+ ```sql
+create table airbnb_searches 
+(
+user_id int,
+date_searched date,
+filter_room_types varchar(200)
+);
+insert into airbnb_searches values
+(1,'2022-01-01','entire home,private room')
+,(2,'2022-01-02','entire home,shared room')
+,(3,'2022-01-02','private room,shared room')
+,(4,'2022-01-03','private room')
+;
+
+/*Find the room types that are searched most no of times.
+Output the room type alongside the number of searches for it.
+If the filter for room types has more than one room type,
+consider each unique room type as a separate row.
+Sort the result based on the number of searches in descending order.
+*/
+
+select * from airbnb_searches;
+
+```
+
+* Query using Cte's and Like Clause ~~ MYSQL
+
+```sql
+
+with room1 as (
+select sum(case when filter_room_types like '%entire%' then 1 else 0 end) as s1 from airbnb_searches
+
+),
+ room2 as (  select sum(case when filter_room_types like '%private%' then 1 else 0 end) as s2 from airbnb_searches
+),
+ room3 as  (  select sum(case when filter_room_types like '%shared%' then 1 else 0 end) as s3 from airbnb_searches) 
  
+ , final_output  as (
+ select 'entire home' as value , s1 as cnt  from room1
+ union all
+ select 'private room' as value , s2  as cnt from room2
+ union all
+  select 'shared room' as value , s3 as cnt from room3
+  
+  
+)
+
+select * from final_output order by cnt desc;
+
+```
+
+---
+---
+
+
 
 
  
