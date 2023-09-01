@@ -1973,3 +1973,36 @@ count(dept_name) .. means count over a column name .. give count of row expect n
 ---
 ---
 
+
+## 16 - SQL to Count Occurrence of a Character/Word in a String
+
+```sql
+create table strings (name varchar(50));
+delete from strings;
+insert into strings values ('Ankit Bansal'),('Ram Kumar Verma'),('Akshay Kumar Ak k'),('Rahul');
+
+
+select * from strings;
+```
+
+* Query to count no of spaces in the string -- 
+
+```sql
+select name , replace( name , ' ' , '') as rep_name , length(name) - length(replace( name , ' ' , '')) as cnt from strings;
+
+```
+
+* Query to count no of occurrences of 'Ak' in the strings -- this is a sample use case
+
+```sql
+
+SELECT
+   name,
+   REPLACE(name, 'Ak', '') AS rep_name,
+   ROUND((LENGTH(name) - LENGTH(REPLACE(name, 'Ak', ''))) / LENGTH('Ak')) AS cnt
+FROM strings;
+
+```
+
+---
+---
