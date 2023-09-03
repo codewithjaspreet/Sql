@@ -295,7 +295,7 @@ select * from final_output order by cnt desc;
 
 
  
-## SQL Interview Question for Senior Data Engineer Position in Poland | Data Engineering
+## 5 - SQL Interview Question for Senior Data Engineer Position in Poland | Data Engineering
 
 
 * Table Script -
@@ -358,3 +358,71 @@ where sd.dept_id is null
 ```
 ---
 ---
+
+## 6 & 7  ~ Premium Questions on Datalemur.com
+
+---
+---
+
+# 8 - Most Asked Join Based SQL Problem Part -2 | Asked in Amazon for Data Engineer Position
+
+
+/*There are 2 tables, first table has 5 records and second table has 10 records.
+you can assume any values in each of the tables. how many maximum and minimum records possible in case of
+inner join, left join, right join and full outer join */
+
+
+```sql
+
+create table t1 ( val1 int );
+create table t2 (val2 int);
+insert into t1 values(1), (1), (1), (1), (1);
+insert into t2 values(1), (1), (1), (1), (1) , (1), (1), (1), (1), (1);
+
+create table t3(val3 int);
+insert into t3 values(2), (2), (2), (2), (2) , (2), (2), (2), (2), (2);
+
+
+```
+
+
+* calculation of t1 with t2 produces maximum records in each case of join
+* calculation of t3 with t2 produces minimum records in each case of join
+
+* logic is to produce maxium records make the cartesian product maximise by making values as same in both the table
+* while to achieve minimum have disimilar values
+
+```sql
+
+select * from t1;
+select * from t2;
+select * from t3;
+
+select * from t1 inner join t2 on t1.val1 = t2.val2;
+select * from t1 left join t2 on t1.val1 = t2.val2;
+select * from t1 right join t2 on t1.val1 = t2.val2;
+
+select * from t1 left join t2 on t1.val1 = t2.val2
+union all
+select * from t1 right join t2 on t1.val1 = t2.val2;
+
+
+select * from t3 inner join t2 on t3.val3 = t2.val2; -- 0 records
+select * from t3 left join t2 on t3.val3= t2.val2;  -- 10 records from t3
+select * from t3 right join t2 on t3.val3 = t2.val2; -- 10 records from t2 
+
+
+select * from t3 left join t2 on t3.val3 = t2.val2
+union all
+select * from t3 right join t2 on t3.val3 = t2.val2;
+
+```
+
+---
+---
+
+
+
+
+
+
