@@ -143,6 +143,80 @@ on t1.total_sales_per_store > t2.avg_sales_for_all_stores;
 ---
 ---
 
+##  Stored Procedures  - A SQL stored procedure is a set of SQL code that can be saved and reused. In other words, it’s a precompiled object because it’s compiled at a time when it’s created on the database. 
+
+* Setup : 
+
+```sql
+
+
+ create table mobile_product( product_id int , product_code varchar(5) ,product_name varchar(10),
+ price int, quantity_remain int , quantity_sold int);
+
+insert into mobile_product values (1, "P1" ,"Iphone", 20000 ,4,195);
+
+
+create table sales(order_id int, order_date varchar(10) , product_code varchar(10) , quantity_ordered int , sales_price int);
+
+-- Inserting the first row
+INSERT INTO sales (order_id, order_date, product_code, quantity_ordered, sales_price)
+VALUES (1, '2023-09-06', 'P1', 10, 50);
+
+-- Inserting the second row
+INSERT INTO sales (order_id, order_date, product_code, quantity_ordered, sales_price)
+VALUES (2, '2023-09-07', 'P1', 15, 75);
+
+-- Inserting the third row
+INSERT INTO sales (order_id, order_date, product_code, quantity_ordered, sales_price)
+VALUES (3, '2023-09-08', 'P1', 8, 40);
+
+
+select * from mobile_product;
+select * from sales;
+
+
+call retail();
+
+```
+
+
+* Non parameterized Procedure a Sample Example on sales and product table ~ (MySql RDMS Version) --
+
+
+```sql
+
+DELIMITER $$
+DROP PROCEDURE IF EXISTS retail$$
+
+CREATE PROCEDURE retail()
+BEGIN
+    DECLARE t_product_code VARCHAR(10);
+    DECLARE t_product_price FLOAT;
+    
+    SELECT product_code, price
+    INTO t_product_code, t_product_price
+    FROM mobile_product
+    WHERE product_name = 'Iphone';
+    
+    INSERT INTO sales (order_id, order_date, product_code, quantity_ordered, sales_price)
+    VALUES (1, CURDATE(), t_product_code, 1, (t_product_price * 1));
+    
+    SET SQL_SAFE_UPDATES=0;
+
+    UPDATE mobile_product
+    SET quantity_remain = (quantity_remain - 1), quantity_sold = (quantity_sold + 1)
+    WHERE product_code = t_product_code;
+    
+    SET SQL_SAFE_UPDATES=1;
+
+    SELECT 'Product Sold !';
+END$$
+
+DELIMITER ;
+
+```
+
+
 ## Please Make sure to checkout other readme's for Interview Problems , content is regularly updating so stay tuned !!
      
      
