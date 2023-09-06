@@ -134,3 +134,16 @@ join Avg_Sales  t2
 on t1.total_sales_per_store > t2.avg_sales_for_all_stores;
 
 ```
+
+---
+---
+
+## Referring More advance topics such as Views , Stored Procedures , Indexes , Query Optimisations  from here - [Don't Click here](https://roadmap.sh/sql)
+
+---
+---
+
+## Please Make sure to checkout other readme's for Interview Problems , content is regularly updating so stay tuned !!
+     
+     
+
