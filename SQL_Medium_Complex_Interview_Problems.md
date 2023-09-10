@@ -442,7 +442,7 @@ select * from purchases;
 ```
 
 
-* Write a sql query to give information of that users who made purchases of same product on different dates
+## 9 - Write a sql query to give information of that users who made purchases of same product on different dates
 
 ```sql
 
@@ -457,4 +457,46 @@ group by user_id, product_id   having count(distinct Date(purchase_date)) > 1
 
 
 
+## Top 5 Artists [Spotify SQL Interview Question]
+
+
+```sql
+
+/* This CTE1 retrieves the count of song appearances for each artist in the top 10 of the global_song_rank table */
+WITH TopArtists AS (
+    SELECT
+        a.artist_name,
+        COUNT(*) AS song_appearances
+    FROM
+        artists a
+    JOIN
+        songs s ON a.artist_id = s.artist_id
+    JOIN
+        global_song_rank gsr ON s.song_id = gsr.song_id
+    WHERE
+        gsr.rank <= 10
+    GROUP BY
+        a.artist_name
+),
+/* This CTE Assigns ranks to the artists based on their song appearances */
+RankedArtists AS (
+    SELECT
+        artist_name,
+        song_appearances,
+        DENSE_RANK() OVER (ORDER BY song_appearances DESC) AS artist_rank
+    FROM
+        TopArtists
+)
+/* Final SELECT statement filters and retrieves the top 5 ranked artists along with their ranks.*/
+SELECT
+    artist_name,
+    artist_rank
+FROM
+    RankedArtists
+WHERE
+    artist_rank <= 5
+ORDER BY
+    artist_rank;
+
+```
 
