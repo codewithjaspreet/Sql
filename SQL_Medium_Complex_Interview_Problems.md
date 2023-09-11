@@ -500,3 +500,84 @@ ORDER BY
 
 ```
 
+# Game Analysis I-1V
+
+```sql
+
+create table activity (
+
+ player_id   int     ,
+ device_id     int     ,
+ event_date    date    ,
+ games_played  int
+ );
+
+ insert into activity values (1,2,'2016-03-01',5 ),(1,2,'2016-03-02',6 ),(2,3,'2017-06-25',1 )
+ ,(3,1,'2016-03-02',0 ),(3,4,'2018-07-03',5 );
+
+ select * from activity;
+
+```
+
+ 
+# Questions:
+
+```sql
+
+ Game Play Analysis 
+
+ q1: Write an SQL query that reports the first login date for each player
+
+ q2: Write a SQL query that reports the device that is first logged in for each player
+
+ q3: Write an SQL query that reports for each player and date, how many games played so far by the player. 
+     That is, the total number of games played by the player until that date.
+
+ q4: Write an SQL query that reports the fraction of players that logged in again 
+     on the day after the day they first logged in, rounded to 2 decimal places
+
+```
+
+
+* Solution 1 - 
+
+```sql
+
+select player_id , min(event_date) as f_login  from activity group by player_id;
+
+```
+
+* Solution 2 -
+
+```sql
+
+select player_id , min(device_id) as f_device from activity group by player_id ;
+
+```
+
+* Solution 3
+
+```sql
+
+select player_id , sum(games_played) over(partition by  player_id order by event_date) as total_till_date , event_date from activity ;
+
+```
+
+
+* Solution 4
+
+```sql
+
+
+WITH PlayerFirstEvent AS (
+    SELECT player_id, MIN(event_date) AS event_date
+    FROM Activity
+    GROUP BY player_id
+)
+
+SELECT ROUND(COUNT(DISTINCT b.player_id) / COUNT(DISTINCT a.player_id), 2) AS fraction
+FROM PlayerFirstEvent a
+LEFT JOIN Activity b ON a.player_id = b.player_id AND DATEDIFF(b.event_date, a.event_date) = 1;
+
+ ```
+
